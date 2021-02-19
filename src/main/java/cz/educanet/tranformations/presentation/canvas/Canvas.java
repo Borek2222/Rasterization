@@ -61,7 +61,7 @@ public class Canvas extends JPanel {
 
         vertices.forEach(i -> {
             vertices.forEach(j -> {
-                if (!i.equals(j)) { // TODO: Optimize, but meh...
+                if (!i.equals(j)) {
                     g.setColor(Color.lightGray);
                     g.drawLine(i.getX() * cellWidth + (cellWidth / 2), i.getY() * cellHeight + (cellHeight / 2), j.getX() * cellWidth + (cellWidth / 2), j.getY() * cellHeight + (cellHeight / 2));
                 }

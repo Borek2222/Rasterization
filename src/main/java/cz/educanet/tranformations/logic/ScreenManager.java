@@ -2,8 +2,7 @@ package cz.educanet.tranformations.logic;
 
 import cz.educanet.tranformations.logic.models.Coordinate;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ScreenManager {
 
@@ -25,7 +24,34 @@ public class ScreenManager {
         return selectedPoints;
     }
 
-    public boolean isFilledIn(Coordinate coordinate) { // TODO: Implement this
-        return false;
+    public int edgeFunction(Coordinate a, Coordinate b, Coordinate c) {
+        return (b.getY() - c.getY()) * (a.getX() - c.getX()) - (c.getX() - b.getX()) * (c.getY() - a.getY());
+    }
+
+    public boolean isFilledIn(Coordinate coordinate) {
+        Coordinate[] coordsArr = selectedPoints.toArray(new Coordinate[]{});
+
+        Coordinate vA = coordsArr[0];
+        Coordinate vB = coordsArr[1];
+        Coordinate vC = coordsArr[2];
+
+        System.out.println(Arrays.toString(coordsArr));
+
+        int a = ((coordinate.getX() - vC.getX()) * (vB.getY() - vC.getY())) + ((coordinate.getY()) - vC.getY()) * (vC.getX() - vB.getX());
+        int b = ((coordinate.getX() - vC.getX()) * (vC.getY() - vA.getY())) + ((coordinate.getY()) - vC.getY()) * (vA.getX() - vC.getX());
+        int c = edgeFunction(vA, vB, vC) - a - b;
+
+        int min = Math.min(edgeFunction(vA, vB, vC), 0);
+        int max = Math.max(edgeFunction(vA, vB, vC), 0);
+
+        if (a < min || a > max)
+            return true;
+
+        else if (b < min || b > max)
+            return true;
+
+        else
+            return c >= min && c <= max;
     }
 }
+
